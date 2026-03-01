@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 export default function CustomCursor() {
     const dotRef = useRef<HTMLDivElement>(null)
@@ -7,11 +7,19 @@ export default function CustomCursor() {
     const pos = useRef({ x: 0, y: 0 })
     const ring = useRef({ x: 0, y: 0 })
     const raf = useRef<number>()
+    const [show, setShow] = useState(false)
 
     useEffect(() => {
-        const isMobile = window.matchMedia('(pointer: coarse)').matches
-        if (isMobile) return
+        // Detect touch/mobile device
+        const isTouchDevice =
+            'ontouchstart' in window ||
+            navigator.maxTouchPoints > 0 ||
+            window.matchMedia('(pointer: coarse)').matches ||
+            window.innerWidth < 1024
 
+        if (isTouchDevice) return // exit early, render nothing
+
+        setShow(true)
         document.body.style.cursor = 'none'
 
         const moveCursor = (e: MouseEvent) => {
@@ -56,8 +64,6 @@ export default function CustomCursor() {
 
         // Initial setup
         setupInteractivity()
-        // Interval or mutation observer can be used here for dynamic pages, 
-        // but React handles component lifecycles so we just run it again occasionally
         const interval = setInterval(setupInteractivity, 1500)
 
         return () => {
@@ -68,12 +74,14 @@ export default function CustomCursor() {
         }
     }, [])
 
+    if (!show) return null // render nothing on mobile
+
     return (
         <>
             {/* Small dot */}
             <div
                 ref={dotRef}
-                className="fixed top-0 left-0 w-2 h-2 bg-accent rounded-full
+                className="cursor-dot fixed top-0 left-0 w-2 h-2 bg-accent rounded-full
                    pointer-events-none z-[9999] transition-transform
                    duration-75"
                 style={{ willChange: 'transform' }}
@@ -81,7 +89,7 @@ export default function CustomCursor() {
             {/* Large ring */}
             <div
                 ref={ringRef}
-                className="fixed top-0 left-0 w-10 h-10 rounded-full
+                className="cursor-ring fixed top-0 left-0 w-10 h-10 rounded-full
                    border-2 border-accent pointer-events-none z-[9998]
                    transition-[width,height,background] duration-200"
                 style={{ willChange: 'transform' }}

@@ -5,16 +5,67 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Star } from 'lucide-react'
 import { useCardSwipe } from '@/hooks/useCardSwipe'
+import { iosSpring } from '@/lib/ios-animations'
+
+const getAvatar = (seed: string) =>
+    `https://api.dicebear.com/8.x/personas/svg?seed=${encodeURIComponent(seed)}&backgroundColor=1c1c1e&radius=50`
+
+interface Testimonial {
+    id: number
+    nameAr: string
+    nameEn: string
+    roleAr: string
+    roleEn: string
+    company: string
+    avatar: string
+    quoteAr: string
+    quoteEn: string
+    rating: number
+}
+
+const testimonials: Testimonial[] = [
+    {
+        id: 0,
+        nameAr: 'أحمد المنصور',
+        nameEn: 'Ahmed Al-Mansour',
+        roleAr: 'مدير تنفيذي',
+        roleEn: 'CEO',
+        company: 'TechVentures',
+        avatar: getAvatar('AhmedMansour'),
+        quoteAr: 'بصمة غيّرت طريقة عمل شركتنا بالكامل! الأتمتة وفّرت علينا أكثر من 40 ساعة عمل كل أسبوع',
+        quoteEn: 'بصمة completely transformed our workflow. Automation saved us 40+ hours every week.',
+        rating: 5,
+    },
+    {
+        id: 1,
+        nameAr: 'سمر الرشيد',
+        nameEn: 'Samar Al-Rashid',
+        roleAr: 'مؤسسة متجر إلكتروني',
+        roleEn: 'E-commerce Founder',
+        company: 'LuxeStore',
+        avatar: getAvatar('SamarRashid'),
+        quoteAr: 'الموقع الذي بنته لنا بصمة يعكس هويتنا بشكل مثالي، التصميم احترافي والسرعة ممتازة',
+        quoteEn: 'The website بصمة built perfectly reflects our brand. Professional design, excellent speed.',
+        rating: 5,
+    },
+    {
+        id: 2,
+        nameAr: 'محمد الزهراني',
+        nameEn: 'Mohammed Al-Zahrani',
+        roleAr: 'مدير تسويق',
+        roleEn: 'Marketing Director',
+        company: 'GrowthLab',
+        avatar: getAvatar('MohammedZahrani'),
+        quoteAr: 'الاحترافية والسرعة في التنفيذ لا مثيل لهما، فريق بصمة يفهم احتياجاتك من أول جلسة',
+        quoteEn: 'Unmatched professionalism and speed. بصمة team understands you from the very first session.',
+        rating: 5,
+    },
+]
 
 export function TestimonialsSection() {
     const t = useTranslations('testimonials')
     const [active, setActive] = useState(0)
 
-    const testimonials = [
-        { id: 0, name: t('c1Name'), role: t('c1Role'), quote: t('c1Quote'), init: 'AM' },
-        { id: 1, name: t('c2Name'), role: t('c2Role'), quote: t('c2Quote'), init: 'SR' },
-        { id: 2, name: t('c3Name'), role: t('c3Role'), quote: t('c3Quote'), init: 'MZ' }
-    ]
 
     const { onTouchStart, onTouchEnd, current } = useCardSwipe(testimonials.length)
 
@@ -29,7 +80,9 @@ export function TestimonialsSection() {
             setActive((prev) => (prev + 1) % testimonials.length)
         }, 5000)
         return () => clearInterval(timer)
-    }, [testimonials.length])
+    }, [])
+
+    const item = testimonials[active]
 
     return (
         <section className="py-12 md:py-32 bg-darker relative z-10 overflow-hidden">
@@ -49,7 +102,7 @@ export function TestimonialsSection() {
 
                 {/* Cards */}
                 <div
-                    className="max-w-4xl mx-auto relative min-h-[320px] md:min-h-[300px]"
+                    className="max-w-4xl mx-auto relative min-h-[360px] md:min-h-[300px]"
                     onTouchStart={onTouchStart}
                     onTouchEnd={onTouchEnd}
                 >
@@ -59,20 +112,11 @@ export function TestimonialsSection() {
                             initial={{ opacity: 0, x: 40, scale: 0.97 }}
                             animate={{ opacity: 1, x: 0, scale: 1 }}
                             exit={{ opacity: 0, x: -40, scale: 0.97 }}
-                            transition={{ duration: 0.4, ease: "easeOut" }}
+                            transition={{ ...iosSpring }}
                             className="absolute inset-0"
                         >
-                            {/* iOS Card */}
-                            <div
-                                className="rounded-[20px] md:rounded-2xl p-6 md:p-14 flex flex-col items-center relative overflow-hidden h-full"
-                                style={{
-                                    background: 'rgba(28, 28, 30, 0.85)',
-                                    border: '1px solid rgba(232,67,45,0.2)',
-                                    backdropFilter: 'blur(40px) saturate(180%)',
-                                    WebkitBackdropFilter: 'blur(40px) saturate(180%)',
-                                    boxShadow: '0 2px 20px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.07)',
-                                }}
-                            >
+                            {/* iOS Glass Card */}
+                            <div className="ios-glass rounded-[20px] md:rounded-2xl p-6 md:p-14 flex flex-col items-center relative overflow-hidden h-full">
                                 {/* Quote decoration */}
                                 <span
                                     className="absolute top-2 left-4 md:left-8 text-accent/15 font-serif pointer-events-none select-none"
@@ -83,27 +127,58 @@ export function TestimonialsSection() {
 
                                 {/* Stars */}
                                 <div className="flex gap-0.5 md:gap-1 mb-4 md:mb-6 text-yellow-500 relative z-10">
-                                    {[...Array(5)].map((_, i) => <Star key={i} size={16} fill="currentColor" className="md:w-5 md:h-5" />)}
+                                    {[...Array(item.rating)].map((_, i) => (
+                                        <Star key={i} size={16} fill="currentColor" className="md:w-5 md:h-5" />
+                                    ))}
                                 </div>
 
                                 {/* Quote */}
                                 <p className="text-[15px] md:text-xl lg:text-2xl font-medium leading-relaxed md:leading-relaxed mb-6 md:mb-10 pb-4 md:pb-10 border-b border-white/10 w-full text-center text-white/90 relative z-10 italic">
-                                    &quot;{testimonials[active].quote}&quot;
+                                    &quot;{item.quoteAr}&quot;
                                 </p>
 
                                 {/* Author */}
                                 <div className="flex items-center gap-3 md:gap-4 relative z-10">
-                                    <div
-                                        className="w-11 h-11 md:w-14 md:h-14 rounded-full flex items-center justify-center font-bold font-inter text-white text-[13px] md:text-base"
-                                        style={{
-                                            background: 'linear-gradient(135deg, #E8432D, #ff6b4a)',
-                                        }}
-                                    >
-                                        {testimonials[active].init}
+                                    {/* Avatar with verified badge */}
+                                    <div className="relative">
+                                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                                        <img
+                                            src={item.avatar}
+                                            alt={item.nameAr}
+                                            width={60}
+                                            height={60}
+                                            className="w-11 h-11 md:w-[60px] md:h-[60px] rounded-full border-2 border-accent/50
+                                                       ring-2 ring-accent/20 ring-offset-2
+                                                       ring-offset-transparent object-cover"
+                                            style={{
+                                                background: 'rgba(232,67,45,0.1)',
+                                                filter: 'drop-shadow(0 0 8px rgba(232,67,45,0.3))',
+                                            }}
+                                        />
+                                        {/* Verified badge */}
+                                        <div className="absolute -bottom-1 -right-1 w-5 h-5
+                                                        bg-accent rounded-full border-2
+                                                        border-[#080810] flex items-center
+                                                        justify-center">
+                                            <svg width="10" height="10" viewBox="0 0 10 10" fill="white">
+                                                <path
+                                                    d="M1.5 5L3.5 7.5L8.5 2.5"
+                                                    stroke="white"
+                                                    strokeWidth="1.5"
+                                                    fill="none"
+                                                    strokeLinecap="round"
+                                                />
+                                            </svg>
+                                        </div>
                                     </div>
+
                                     <div className="text-start">
-                                        <h4 className="font-semibold text-[14px] md:text-lg text-white">{testimonials[active].name}</h4>
-                                        <p className="text-white/50 text-[12px] md:text-sm">{testimonials[active].role}</p>
+                                        <h4 className="font-semibold text-[14px] md:text-lg text-white">
+                                            {item.nameAr}
+                                        </h4>
+                                        <p className="text-white/50 text-[12px] md:text-sm">
+                                            {item.roleAr} · {item.company}
+                                        </p>
                                     </div>
                                 </div>
                             </div>

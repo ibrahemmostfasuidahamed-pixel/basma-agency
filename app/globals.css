@@ -132,3 +132,100 @@ html[dir="rtl"] .animate-marquee {
     overscroll-behavior: none;
   }
 }
+
+/* ─── FIX 1: Force default cursor on all touch devices ─── */
+@media (pointer: coarse) {
+  * {
+    cursor: auto !important;
+  }
+
+  .cursor-dot,
+  .cursor-ring {
+    display: none !important;
+  }
+}
+
+/* Custom cursor only on precise pointer (mouse) */
+@media (pointer: fine) {
+  body {
+    cursor: none;
+  }
+}
+
+/* ─── FIX 4: iOS 18 Design System ─── */
+
+/* iOS 18 Liquid Glass Material */
+.ios-glass {
+  background: rgba(28, 28, 30, 0.72);
+  backdrop-filter: blur(40px) saturate(180%) brightness(1.1);
+  -webkit-backdrop-filter: blur(40px) saturate(180%) brightness(1.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 2px 20px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* iOS 18 Thick Material */
+.ios-material-thick {
+  background: rgba(44, 44, 46, 0.85);
+  backdrop-filter: blur(60px) saturate(200%);
+  -webkit-backdrop-filter: blur(60px) saturate(200%);
+}
+
+/* iOS 18 Tinted Glass (accent color) */
+.ios-glass-accent {
+  background: rgba(232, 67, 45, 0.08);
+  backdrop-filter: blur(40px) saturate(180%);
+  border: 1px solid rgba(232, 67, 45, 0.2);
+  box-shadow:
+    0 2px 20px rgba(232, 67, 45, 0.1),
+    inset 0 1px 0 rgba(232, 67, 45, 0.1);
+}
+
+/* iOS 18 pill shape for buttons/tabs */
+.ios-pill {
+  border-radius: 100px;
+  padding: 8px 18px;
+}
+
+/* iOS 18 Dynamic Island style (notification bar) */
+.ios-island {
+  border-radius: 26px;
+  background: #000;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.1),
+    0 8px 32px rgba(0, 0, 0, 0.8);
+}
+
+/* iOS 18 spring motion defaults */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Smooth momentum scrolling like iOS */
+.scroll-ios {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  overscroll-behavior: contain;
+}
+
+/* Badge pulse animation */
+@keyframes badge-pulse {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.3);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animate-badge-pulse {
+  animation: badge-pulse 2s ease-in-out infinite;
+}

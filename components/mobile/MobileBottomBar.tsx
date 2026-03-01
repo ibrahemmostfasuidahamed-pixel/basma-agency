@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { Home, Zap, Rocket, Briefcase, MessageCircle } from 'lucide-react'
 import { useActiveSection } from '@/hooks/useActiveSection'
+import { iosBounce } from '@/lib/ios-animations'
 
 interface MobileBottomBarProps {
     locale: string
@@ -64,10 +65,10 @@ export default function MobileBottomBar({ locale }: MobileBottomBarProps) {
             className="fixed bottom-0 left-0 right-0 z-[9990] md:hidden"
             style={{
                 paddingBottom: 'env(safe-area-inset-bottom, 0px)',
-                background: 'rgba(8,8,16,0.92)',
-                backdropFilter: 'blur(30px) saturate(180%)',
-                WebkitBackdropFilter: 'blur(30px) saturate(180%)',
-                borderTop: '1px solid rgba(255,255,255,0.08)',
+                background: 'rgba(28, 28, 30, 0.88)',
+                backdropFilter: 'blur(60px) saturate(180%)',
+                WebkitBackdropFilter: 'blur(60px) saturate(180%)',
+                borderTop: '0.5px solid rgba(255,255,255,0.15)',
                 boxShadow: '0 -4px 30px rgba(0,0,0,0.6)',
             }}
         >
@@ -86,10 +87,12 @@ export default function MobileBottomBar({ locale }: MobileBottomBarProps) {
                                 style={{ marginTop: '-20px' }}
                             >
                                 <div
-                                    className="w-[54px] h-[54px] rounded-full flex items-center justify-center border-2 border-white/20 animate-pulse-glow"
+                                    className="w-[54px] h-[54px] flex items-center justify-center animate-pulse-glow"
                                     style={{
-                                        background: 'linear-gradient(135deg, #E8432D, #ff6b4a)',
-                                        boxShadow: '0 0 25px rgba(232,67,45,0.6), 0 -4px 15px rgba(232,67,45,0.3)',
+                                        borderRadius: '18px',
+                                        background: 'linear-gradient(145deg, #E8432D, #ff6b4a)',
+                                        boxShadow:
+                                            '0 4px 15px rgba(232,67,45,0.5), inset 0 1px 0 rgba(255,255,255,0.3), inset 0 -1px 0 rgba(0,0,0,0.2)',
                                     }}
                                 >
                                     <Icon size={24} className="text-white" />
@@ -101,27 +104,33 @@ export default function MobileBottomBar({ locale }: MobileBottomBarProps) {
                     return (
                         <motion.button
                             key={tab.id}
-                            whileTap={{ scale: 0.85 }}
+                            whileTap={{ scale: 0.85, transition: { duration: 0.1 } }}
                             onClick={() => handleTabPress(tab.id)}
                             className="flex flex-col items-center justify-center pb-2 pt-1.5 relative"
                         >
-                            {/* Active dot indicator */}
-                            {isActive && (
-                                <motion.div
-                                    layoutId="tab-dot"
-                                    className="tab-active-dot mb-1"
-                                    transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-                                />
-                            )}
-                            {!isActive && <div className="h-[8px]" />}
-
+                            {/* iOS 18 active pill indicator behind icon */}
                             <motion.div
-                                animate={{ y: isActive ? -2 : 0 }}
-                                transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+                                animate={{
+                                    y: isActive ? -2 : 0,
+                                }}
+                                transition={iosBounce}
+                                className="relative flex items-center justify-center"
                             >
+                                {isActive && (
+                                    <motion.div
+                                        layoutId="tab-pill"
+                                        className="absolute inset-0 -mx-2 -my-0.5"
+                                        style={{
+                                            background: 'rgba(232,67,45,0.15)',
+                                            borderRadius: '10px',
+                                            padding: '6px 16px',
+                                        }}
+                                        transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+                                    />
+                                )}
                                 <Icon
                                     size={22}
-                                    className="transition-colors duration-200"
+                                    className="transition-colors duration-200 relative z-10"
                                     style={{
                                         color: isActive ? '#E8432D' : 'rgba(240,240,248,0.4)',
                                     }}
