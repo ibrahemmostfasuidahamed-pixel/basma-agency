@@ -1,0 +1,98 @@
+{
+    "nav": {
+        "home": "Home",
+        "services": "Services",
+        "howWeWork": "Process",
+        "portfolio": "Portfolio",
+        "contact": "Contact",
+        "startProject": "Start Project"
+    },
+    "hero": {
+        "badge": "🤖 AI Automation & Web Development",
+        "title": "We Build the Future\nWith Artificial Intelligence",
+        "subtitle": "Business automation and professional web development.",
+        "cta1": "Explore Services",
+        "cta2": "Contact Us",
+        "scroll": "Scroll Down"
+    },
+    "services": {
+        "title": "Our Services",
+        "aiTitle": "AI Business Automation",
+        "aiDesc": "Smart solutions to automate workflows, save time, and increase productivity.",
+        "aiFeatures": [
+            "Real-time data analysis",
+            "Automate repetitive tasks",
+            "Intelligent chatbots",
+            "All-platform integration",
+            "Smart reports & analytics",
+            "Save 80% work time"
+        ],
+        "aiBtn": "Explore Service",
+        "webTitle": "Professional Web Development",
+        "webDesc": "WordPress sites, E-commerce, and custom UI/UX design matching global standards.",
+        "webFeatures": [
+            "Professional WordPress sites",
+            "WooCommerce stores",
+            "Custom UI/UX design",
+            "SEO optimization",
+            "Lightning fast loading",
+            "All-device responsive"
+        ],
+        "webBtn": "Explore Service"
+    },
+    "stats": {
+        "projects": "Completed Projects",
+        "clients": "Happy Clients",
+        "services": "Specialized Services",
+        "quality": "Guaranteed Quality"
+    },
+    "howWeWork": {
+        "title": "How We Work",
+        "subtitle": "An organized, effective process to ensure project success",
+        "step1Title": "Free Consultation",
+        "step1Desc": "We meet to understand your needs and determine the best technical solutions.",
+        "step2Title": "Project Analysis",
+        "step2Desc": "We study requirements, formulate a clear plan and set strict timelines.",
+        "step3Title": "Execution & Development",
+        "step3Desc": "We begin design, programming, and configuring automations to the highest specs.",
+        "step4Title": "Delivery & Follow-up",
+        "step4Desc": "We deliver, test, provide training, and offer continuous support."
+    },
+    "portfolio": {
+        "title": "Our Work",
+        "filterAll": "All",
+        "filterAuto": "Automation",
+        "filterWeb": "Websites",
+        "btn": "View Project",
+        "p1Title": "Customer Support AI System",
+        "p1Desc": "Developed automated AI chatbot responding natively to clients",
+        "p2Title": "Fashion E-Commerce Store",
+        "p2Desc": "Full-featured premium store with modern UI styling",
+        "p3Title": "Sales Automation Dashboard",
+        "p3Desc": "Automated reporting board gathering multi-source data"
+    },
+    "testimonials": {
+        "title": "What Our Clients Say",
+        "c1Name": "Ahmed Al-Mansour",
+        "c1Role": "CEO",
+        "c1Quote": "بصمة completely changed how our company operates! Automation saved us 40+ hours weekly",
+        "c2Name": "Samar Al-Rashid",
+        "c2Role": "E-commerce Founder",
+        "c2Quote": "The website بصمة built perfectly reflects our brand identity. Professional design, excellent speed",
+        "c3Name": "Mohammed Al-Zahrani",
+        "c3Role": "Marketing Director",
+        "c3Quote": "Unmatched professionalism and speed. بصمة team understands your needs from the first session"
+    },
+    "cta": {
+        "title": "Ready to Start?",
+        "subtitle": "Contact us now and begin your journey to success",
+        "btnPrimary": "Start Now",
+        "btnWhatsapp": "WhatsApp",
+        "badge1": "Free Consultation",
+        "badge2": "Reply within 24h",
+        "badge3": "Quality Guaranteed"
+    },
+    "footer": {
+        "rights": "© 2025 بصمة — All Rights Reserved"
+    }
+}

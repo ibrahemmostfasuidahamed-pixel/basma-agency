@@ -1,0 +1,22 @@
+{
+    "name": "بصمة",
+    "short_name": "بصمة",
+    "description": "AI Automation & Web Development",
+    "start_url": "/",
+    "display": "standalone",
+    "orientation": "portrait",
+    "background_color": "#080810",
+    "theme_color": "#E8432D",
+    "icons": [
+        {
+            "src": "/logo.jpg",
+            "sizes": "192x192",
+            "type": "image/jpeg"
+        },
+        {
+            "src": "/logo.jpg",
+            "sizes": "512x512",
+            "type": "image/jpeg"
+        }
+    ]
+}
